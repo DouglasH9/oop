@@ -46,6 +46,11 @@ class User:
     def display_user_balance(self):
         self.account.display_account_info()
 
+    def transfer_money(self, other_user, amount):
+        self.account.balance -= amount
+        other_user.account.balance += amount
+        return self
+
 
 doug = User("doug", "douglash9882@gmail.com")
 doug.make_deposit(50).give_interest()
