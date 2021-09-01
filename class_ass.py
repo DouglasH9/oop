@@ -10,8 +10,11 @@ class BankAccount:
         self.balance += amount
         return self
 
-    def withdraw(self, amount):
-        self.balance -= amount
+    def withdrawal(self, amount):
+        if(self.balance - amount)<= 0:
+            self.balance -= amount
+        else:
+            print("Insufficient funds")
         return self
 
     def display_account_info(self):
@@ -58,5 +61,5 @@ class User:
 
 
 doug = User("doug", "douglash9882@gmail.com")
-doug.make_deposit(50, 'savings').give_interest('savings').make_deposit(2000, 'checking')
+doug.make_deposit(50, 'savings').give_interest('savings').make_deposit(2000, 'checking').make_withdrawal(1000, 'checking')
 doug.display_user_balance()
