@@ -15,7 +15,7 @@ class BankAccount:
         return self
 
     def display_account_info(self):
-        print(f"Balance {self.balance}")
+        print(self.balance)
 
     def yield_interest(self):
         self.balance += self.balance * self.int_rate
@@ -29,22 +29,27 @@ class User:
     def __init__(self, name, email):
         self.name = name
         self.email = email
-        self.account = BankAccount(.02, 0)
+        self.account = {
+            "checking" : BankAccount(.02, 0),
+            "savings" : BankAccount(.05, 0)
+        }
         
-    def make_deposit(self, amount):
-        self.account.deposit(amount)
+    def make_deposit(self, amount, acctType):
+        self.account[acctType].deposit(amount)
         return self
         
-    def make_withdrawal(self, amount):
-        self.account.withdrawal(amount)
+    def make_withdrawal(self, amount, acctType):
+        self.account[acctType].withdrawal(amount)
         return self
 
-    def give_interest(self):
-        self.account.yield_interest()
+    def give_interest(self, acctType):
+        self.account[acctType].yield_interest()
         return self
 
     def display_user_balance(self):
-        self.account.display_account_info()
+        print(f"User: {self.name}, Checking acct balance: {self.account['checking'].balance}")
+        print(f"User: {self.name}, Savings acct balance: {self.account['savings'].balance}")
+        return self
 
     def transfer_money(self, other_user, amount):
         self.account.balance -= amount
@@ -53,5 +58,5 @@ class User:
 
 
 doug = User("doug", "douglash9882@gmail.com")
-doug.make_deposit(50).give_interest()
+doug.make_deposit(50, 'savings').give_interest('savings').make_deposit(2000, 'checking')
 doug.display_user_balance()
